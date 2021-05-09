@@ -23,9 +23,7 @@ namespace RekognitionPPE
     {
         AWSCredentials credentials;
         private static readonly RegionEndpoint region = RegionEndpoint.USEast1;
-
         private const string bucketName = "bucket-ppe";
-
         private readonly DrawBox draw = new();
 
         public FormMain()
@@ -36,6 +34,7 @@ namespace RekognitionPPE
         public void GetCredentials()
         {
             var chain = new CredentialProfileStoreChain();
+
             if (!chain.TryGetAWSCredentials("AWS Educate", out credentials))
             {
                 MessageBox.Show("Erro ao obter credenciais");
@@ -45,6 +44,7 @@ namespace RekognitionPPE
         private async Task<bool> UploadToS3(string file)
         {
             GetCredentials();
+
             try
             {
                 var client = new AmazonS3Client(credentials, region);
@@ -83,6 +83,7 @@ namespace RekognitionPPE
                     RequiredEquipmentTypes = new List<String>() { "FACE_COVER" }
                 }
             };
+
             try
             {
                 var detectedPeeResponse = await client.DetectProtectiveEquipmentAsync(detectedPpeRequest);
